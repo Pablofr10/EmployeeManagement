@@ -1,0 +1,36 @@
+﻿
+@model HomeDto
+
+@{
+    ViewBag.Title = "Employee Details";
+    var photoPath = "~/images/" + (Model.Employee.PhotoPath ?? "noimage.jpg");
+}
+
+
+<h3>@Model.PageTitle</h3>
+
+
+<div class="card-deck col-lg-6">
+        <div class="card d-flex align-content-center">
+            <div class="card-header">
+                <h3>@Model.Employee.Name</h3>
+            </div>
+            <img class="card-img-top" src="@photoPath" asp-append-version="true"/>
+            <div class="text-center">
+                <h3>Employee Id: @Model.Employee.Id</h3>
+                <h3>Email: @Model.Employee.Email</h3>
+                <h3>Department: @Model.Employee.Departament</h3>
+            </div>
+            <div class="card-footer text-center">
+                <a asp-controller="home" asp-action="index" class="btn btn-primary">Back</a>
+                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="#" class="btn btn-primary">Delete</a>
+            </div>
+
+        </div>
+
+</div>
+
+@section Scripts {
+    <script src="js/CustomScript.js"></script>
+}

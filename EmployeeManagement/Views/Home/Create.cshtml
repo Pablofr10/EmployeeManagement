@@ -1,0 +1,67 @@
+﻿@model EmployeeCreateDto
+
+@{
+    ViewBag.Title = "Create Employee";
+}
+
+<form enctype="multipart/form-data" asp-controller="Home" style="margin-top: 20px;" asp-action="Create" method="post" xmlns="http://www.w3.org/1999/html">
+    <div class="form-group row">
+        <label class="col-2" asp-for="Name"></label>
+        <div class="col-6">
+            <input class="form-control" asp-for="Name"/>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2" asp-for="Email"></label>
+        <div class="col-6">
+            <input class="form-control" asp-for="Email"/>
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2" asp-for="Departament"></label>
+        <div class="col-6">
+            <select class="form-control" asp-items="Html.GetEnumSelectList<Dept>()" asp-for="Departament">
+                <option value="">Select an Item</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-2" asp-for="Photos"></label>
+        <div class="col-6">
+            <div class="custom-file">
+                <input multiple class="form-control custom-file-input" asp-for="Photos"/>
+                <label class="custom-file-label" asp-validation-for="Photos">Choose File...</label>
+            </div>
+        </div>
+    </div>
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <button type="submit" class="btn btn-primary">Create</button>
+    
+    @section Scripts
+    {
+        <script>
+            $(document).ready(
+                function() {
+                    $('.custom-file-input').
+                        on("change", function () {
+                            console.log($(this));
+                            var fileLabel = $(this).next('.custom-file-label');
+                            var files = $(this)[0].files;
+                            if (files.length > 1) {
+                                fileLabel.html(files.length + ' files selected');
+                            } else if (files.length == 1) {
+                                fileLabel.html(files[0].name);
+                            }
+                            //var fileName = $(this).val().split("\\").pop();
+                            //$(this).next('.custom-file-label').html(fileName);
+                        });
+                }
+                );
+        </script>
+    }
+    
+    
+   
+</form>
