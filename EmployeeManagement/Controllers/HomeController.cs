@@ -27,9 +27,18 @@ namespace EmployeeManagement.Controllers
         }
         public ViewResult Details(int? id)
         {
+            throw new SystemException();
+            Employee employee = _employeeRepository.GetEmployee(id.Value);
+
+            if (employee == null)
+            {
+                Response.StatusCode = 400;
+                return View("EmployeeNotFound", id.Value);
+            }
+
             HomeDto homeDto = new HomeDto()
             {
-                Employee = _employeeRepository.GetEmployee(id ?? 1),
+                Employee = employee,
                 PageTitle = "Employee Details"
             };
             
@@ -41,6 +50,25 @@ namespace EmployeeManagement.Controllers
         {
             return View();
         }
+
+
+        [HttpGet]
+        public ViewResult Edit(int id)
+        {
+            Employee employee = _employeeRepository.GetEmployee(id);
+            EmployeeEditDto employeeEditDto = new EmployeeEditDto
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Email = employee.Email,
+                Departament = employee.Departament,
+                ExistingPhotoPath = employee.PhotoPath
+            };
+
+            return View(employeeEditDto);
+        }
+
+
         [HttpPost]
         public IActionResult Create(EmployeeCreateDto model)
         {
