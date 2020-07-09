@@ -27,7 +27,6 @@ namespace EmployeeManagement.Controllers
         }
         public ViewResult Details(int? id)
         {
-            throw new SystemException();
             Employee employee = _employeeRepository.GetEmployee(id.Value);
 
             if (employee == null)
